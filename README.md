@@ -1,80 +1,63 @@
-# 🚗 DFA Plate Validator (Turkish License Plate Format)
+# 🚗 DFA Plate Validator (C# Windows Forms)
 
-![Language](https://img.shields.io/badge/Language-Python%2FJava%2FC%2B%2B-blue.svg)
+![Language](https://img.shields.io/badge/Language-C%23-blue.svg)
+![Framework](https://img.shields.io/badge/Framework-.NET_Framework_WinForms-green.svg)
 ![Domain](https://img.shields.io/badge/Domain-Formal_Languages_%26_Automata-orange.svg)
-![Concept](https://img.shields.io/badge/Concept-DFA_State_Machine-green.svg)
-![Category](https://img.shields.io/badge/Category-String_Validation-purple.svg)
+![Concept](https://img.shields.io/badge/Concept-DFA_State_Machine-purple.svg)
 
-A Deterministic Finite Automaton (DFA) implementation developed as part of the **Formal Languages and Automata Theory** course. This tool models a formal state machine to validate string inputs against official **Turkish License Plate (Türkiye Plaka Kodu)** formatting rules.
+A C# Windows Forms desktop application developed for the **Formal Languages and Automata Theory** course. This tool implements a Deterministic Finite Automaton (DFA) state machine to validate string inputs against official **Turkish License Plate (Türkiye Plaka Kodu)** formatting rules.
 
 ---
 
 ## 📌 Project Overview
 
-Formal languages classify syntactically valid strings using formal grammars and state machines. In Turkey, license plates follow strict standardized patterns based on province codes, letter combinations, and number sequences.
+Formal languages classify syntactically valid strings using state machines. In Turkey, vehicle license plates follow strict standardized patterns based on province codes (01–81), letter groups, and number sequences.
 
-This project designs and implements a formal **DFA (Deterministic Finite Automaton)** tuple $M = (Q, \Sigma, \delta, q_0, F)$ that reads input strings character-by-character, transitions through deterministic states, and determines string acceptance without using regular expression shortcuts.
+This application provides a graphical user interface (GUI) where users input candidate license plate strings. The underlying engine processes the input character-by-character through explicit state transitions ($\delta$) without using regular expression shortcuts, giving immediate feedback via the UI.
 
 ### Key Features
-* **Formal State Machine Implementation:** Explicit transition functions ($\delta$) mapping inputs strictly to deterministic states.
-* **Turkish License Plate Formatting Rules:**
+* **Formal DFA Engine:** Strict deterministic state machine transition logic ($M = (Q, \Sigma, \delta, q_0, F)$).
+* **Turkish License Plate Rules:**
   * **Province Code:** 2-digit number ranging from `01` to `81`.
   * **Format 1:** `34 A 1234` (1 Letter, 4 Digits)
-  * **Format 2:** `34 AB 123` or `34 AB 1234` (2 Letters, 3 or 4 Digits)
-  * **Format 3:** `34 ABC 12` or `34 ABC 123` (3 Letters, 2 or 3 Digits)
-* **Rejection Analysis:** Catches illegal province codes (e.g., `00` or `82+`), invalid character sequences, missing spaces, and length mismatches.
-* **Step-by-Step State Tracking:** Logs state transitions (e.g., $q_0 \xrightarrow{\text{'3'}} q_1 \xrightarrow{\text{'4'}} q_2 \dots$) for educational demonstration.
-
----
-
-## ⚙️ Mathematical Formalism (DFA Definition)
-
-The automaton is formally defined as $M = (Q, \Sigma, \delta, q_0, F)$:
-
-* **$Q$ (State Set):** $\{q_0, q_1, q_2, q_{\text{letter1}}, q_{\text{letter2}}, q_{\text{digit1}}, \dots, q_{\text{accept}}, q_{\text{trap}}\}$
-* **$\Sigma$ (Alphabet):** $\{0..9\} \cup \{A..Z\} \setminus \{\text{Turkish-specific non-standard characters}\} \cup \{\text{space}\}$
-* **$q_0$ (Initial State):** Start state before reading the province code.
-* **$\delta$ (Transition Function):** $\delta: Q \times \Sigma \rightarrow Q$
-* **$F$ (Accept States):** Valid terminal states reached after complete plate parsing.
+  * **Format 2:** `34 AB 123` / `34 AB 1234` (2 Letters, 3 or 4 Digits)
+  * **Format 3:** `34 ABC 12` / `34 ABC 123` (3 Letters, 2 or 3 Digits)
+* **Windows Forms GUI:** Graphical interface featuring plate text entry (`txtPlaka`), verification trigger (`btnKontrol`), and dynamic validation status display (`lblSonuc`).
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-* Python 3.8+ (or GCC / Java depending on your source build environment)
+* **Windows OS**
+* **Visual Studio** (2017 or newer) with **.NET Desktop Development** workload installed.
 
-### Execution Steps
+### Building and Running
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/USERNAME/DFA-Plate-Validator.git](https://github.com/USERNAME/DFA-Plate-Validator.git)
-   cd DFA-Plate-Validator
+   git clone [https://github.com/KorsanPanda/dfa-plate-validator.git](https://github.com/KorsanPanda/dfa-plate-validator.git)
+   cd dfa-plate-validator
    ```
 
-2. **Run the validator:**
-   ```bash
-   python main.py
-   ```
+2. **Open and Run in Visual Studio:**
+   * Open the project file or solution in **Visual Studio**.
+   * Press **F5** or click **Start** to compile and launch the Windows Forms application.
 
-3. **Interactive Testing:**
-   Input candidate plate strings to test validation output:
-   * `34 ABC 123` $\rightarrow$ **VALID (Accepted)**
-   * `06 A 1234` $\rightarrow$ **VALID (Accepted)**
-   * `82 ABC 12` $\rightarrow$ **INVALID (Rejected - Invalid Province Code)**
-   * `34 AB 12345` $\rightarrow$ **INVALID (Rejected - Excess Digits)**
+3. **Validation Testing:**
+   * `34 ABC 123` $\rightarrow$ **VALID**
+   * `06 A 1234` $\rightarrow$ **VALID**
+   * `82 ABC 12` $\rightarrow$ **INVALID** (Invalid Province Code)
+   * `34 AB 12345` $\rightarrow$ **INVALID** (Excess Digits)
 
 ---
 
 ## 📁 Directory Structure
 
 ```text
-DFA-Plate-Validator/
-├── docs/
-│   └── State_Diagram.pdf    # Visual DFA transition graph & formal proof
-├── src/
-│   ├── dfa_engine.py        # Core state machine execution engine
-│   ├── transition_table.py  # Explicit state transition mapping logic
-│   └── main.py              # CLI user interface & test suite
-└── README.md
+korsanpanda-dfa-plate-validator/
+├── Form1.cs            # Main C# logic and DFA validation code
+├── Form1.Designer.cs   # Windows Forms GUI designer generated code
+├── Form1.resx          # Form resource file (embedded images & background assets)
+└── README.md           # Project documentation
 ```
